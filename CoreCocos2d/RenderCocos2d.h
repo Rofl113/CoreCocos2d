@@ -13,7 +13,7 @@ public:
 	explicit RenderCocos2d(const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene);
 	virtual ~RenderCocos2d() override;
 
-	virtual void run(const std::function<void()>& preTick, const std::function<void()>& postTick) override;
+	virtual int run(const std::function<void()>& preTick, const std::function<void()>& postTick) override;
 
 private:
 	virtual void handleLoadScene(const std::shared_ptr<IScene>& scene) const override;

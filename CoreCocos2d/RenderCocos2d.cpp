@@ -31,13 +31,13 @@ RenderCocos2d::~RenderCocos2d()
 	eventDispatcher->removeEventListener(m_eventPostTick);
 }
 
-void RenderCocos2d::run(const std::function<void ()>& preTick, const std::function<void ()>& postTick)
+int RenderCocos2d::run(const std::function<void ()>& preTick, const std::function<void ()>& postTick)
 {
 	// Save
 	m_preTick = preTick;
 	m_postTick = postTick;
 	// Run
-	cocos2d::Application::getInstance()->run();
+	return cocos2d::Application::getInstance()->run();
 }
 
 void RenderCocos2d::handleLoadScene(const std::shared_ptr<IScene>& /*scene*/) const
