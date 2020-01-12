@@ -12,9 +12,9 @@ std::unique_ptr<IFactoryScene> CoreAppDelegateCocos2d::createFactoryScene(const 
 	return std::unique_ptr<IFactoryScene>(new FactorySceneCocos2d());
 }
 
-std::unique_ptr<IRender> CoreAppDelegateCocos2d::createRender(const SessionApp& /*sessionApp*/, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
+std::unique_ptr<IRender> CoreAppDelegateCocos2d::createRender(const SessionApp& sessionApp, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
 {
-	return std::unique_ptr<IRender>(new RenderCocos2d(factoryScene, managerDescriptionScene));
+	return std::unique_ptr<IRender>(new RenderCocos2d(sessionApp, factoryScene, managerDescriptionScene));
 }
 
 std::unique_ptr<IManagerScene> CoreAppDelegateCocos2d::createManagerScene(const SessionApp& /*sessionApp*/, const IRender& render)
