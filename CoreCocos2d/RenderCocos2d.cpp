@@ -55,8 +55,18 @@ RenderCocos2d::RenderCocos2d(const SessionApp& sessionApp, const IFactoryScene& 
         this->handleBeforeDraw();
     }))
 {
+	auto director = cocos2d::Director::getInstance();
 	// Add GlView to Director
-	cocos2d::Director::getInstance()->setOpenGLView(m_glView.get());
+	director->setOpenGLView(m_glView.get());
+	m_glView->setDesignResolutionSize(sessionApp.getSize().first, sessionApp.getSize().second, ResolutionPolicy::SHOW_ALL);
+	// Setting Director
+	director->setProjection(cocos2d::Director::Projection::_2D);
+	director->setContentScaleFactor(1.0f);
+	director->setDisplayStats(true);
+	const auto fps = 60;
+	director->setAnimationInterval(1.0f / static_cast<float>(fps));
+	director->resume();
+	director->runWithScene(cocos2d::Scene::create());
 }
 
 RenderCocos2d::~RenderCocos2d()

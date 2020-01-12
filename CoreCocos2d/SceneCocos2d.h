@@ -11,7 +11,7 @@ class IDescriptionScene;
 
 
 
-class SceneCocos2d : public IScene, protected ISceneCocos2d
+class SceneCocos2d : public IScene, public ISceneCocos2d
 {
 	SceneCocos2d() = delete;
 public:

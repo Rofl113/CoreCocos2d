@@ -16,7 +16,7 @@ ManagerSceneCocos2d::~ManagerSceneCocos2d()
 
 }
 
-std::shared_ptr<IScene> ManagerSceneCocos2d::loadScene(const std::string& name)
+std::shared_ptr<IScene> ManagerSceneCocos2d::loadScene(const std::string& name) const
 {
 	auto scene = ClassBase::loadScene(name);
 	if (const auto sceneBase = dynamic_cast<ISceneCocos2d*>(scene.get()))

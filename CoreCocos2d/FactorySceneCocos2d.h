@@ -4,6 +4,7 @@
 #include "Core/IFactoryScene.h"
 // CoreCocos2d
 #include "ISceneCreatorCocos2d.h"
+#include "SceneCreatorCocos2d.h"
 
 
 
@@ -14,7 +15,16 @@ public: /// IFactoryScene
 
 public:
 	template<typename TypeClass>
-	void registerScene(const std::string name = std::string(typeid(TypeClass).name()));
+	void registerScene(const std::string name)
+	{
+		assert(not name.empty());
+		assert(m_factory.count(name) == 0);
+		if (not name.empty())
+		{
+			assert(m_factory.count(name) == 0);
+			m_factory[name] = std::unique_ptr<ISceneCreatorCocos2d>(new SceneCreatorCocos2d<TypeClass>());
+		}
+	}
 
 private:
 	std::map<std::string, std::unique_ptr<ISceneCreatorCocos2d>> m_factory;
