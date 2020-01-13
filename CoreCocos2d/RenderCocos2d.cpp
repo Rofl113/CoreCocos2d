@@ -16,6 +16,8 @@
 namespace
 {
 
+constexpr auto FRAME_ZOOM_FACTOR = 1.0f;
+
 } // END namespace
 
 
@@ -23,6 +25,11 @@ namespace
 // Делегат для кокоса
 class RenderCocos2d::AppDelegateCocos2d : public cocos2d::Application
 {
+public:
+	virtual ~AppDelegateCocos2d() override
+	{
+
+	}
 	virtual void initGLContextAttrs() override
 	{
 		GLContextAttrs glContextAttrs = { 8, 8, 8, 8, 24, 8 };
@@ -45,7 +52,7 @@ class RenderCocos2d::AppDelegateCocos2d : public cocos2d::Application
 RenderCocos2d::RenderCocos2d(const SessionApp& sessionApp, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
     : ClassBase(sessionApp, factoryScene, managerDescriptionScene)
     , m_appDelegateCocos2d(new AppDelegateCocos2d())
-    , m_glView(cocos2d::GLViewImpl::createWithRect(sessionApp.getName(), cocos2d::Rect(0, 0, sessionApp.getSize().first, sessionApp.getSize().second)))
+    , m_glView(cocos2d::GLViewImpl::createWithRect(sessionApp.getName(), cocos2d::Rect(0, 0, sessionApp.getSize().first, sessionApp.getSize().second), FRAME_ZOOM_FACTOR, sessionApp.getResizable()))
     , m_eventPreTick(cocos2d::Director::getInstance()->getEventDispatcher()->addCustomEventListener(cocos2d::Director::EVENT_AFTER_DRAW, [this] (cocos2d::EventCustom* /*eventCustom*/)
     {
         this->handleAfterDraw();
