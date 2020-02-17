@@ -27,5 +27,8 @@ set(SOURCES_CoreCocos2d
 # Создание статической библиотеки
 add_library(CoreCocos2d_LIB STATIC ${SOURCES_CoreCocos2d} ${HEADERS_CoreCocos2d})
 
-target_link_libraries(CoreCocos2d_LIB PUBLIC Core_LIB)
-target_link_libraries(CoreCocos2d_LIB PUBLIC cocos2d)
+find_package(Core_LIB)
+target_link_libraries(CoreCocos2d_LIB Core_LIB)
+
+find_package(cocos2d)
+target_link_libraries(CoreCocos2d_LIB cocos2d)
