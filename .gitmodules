@@ -1,6 +1,0 @@
-[submodule "subs/Core"]
-	path = subs/Core
-	url = https://github.com/Rofl113/Core
-[submodule "subs/Cocos2dLib"]
-	path = subs/Cocos2dLib
-	url = https://github.com/Rofl113/Cocos2dLib
