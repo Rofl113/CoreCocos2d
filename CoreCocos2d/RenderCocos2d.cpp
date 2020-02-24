@@ -10,6 +10,26 @@
 // CoreCocos2d
 #include "ISceneCocos2d.h"
 
+namespace
+{
+
+constexpr auto FRAME_ZOOM_FACTOR = 1.0f;
+
+PtrCocos2d<cocos2d::GLView> createGlView(const std::string& name
+                                         , const std::pair<size_t, size_t>& sizeView
+                                         , const std::pair<size_t, size_t>& sizeDesignResolution
+                                         , const bool isResizable)
+{
+	PtrCocos2d<cocos2d::GLView> glView;
+	{
+		glView.reset(cocos2d::GLViewImpl::createWithRect(name, cocos2d::Rect(0, 0, sizeView.first, sizeView.second), FRAME_ZOOM_FACTOR, isResizable));
+		glView->setDesignResolutionSize(sizeDesignResolution.first, sizeDesignResolution.second, ResolutionPolicy::SHOW_ALL);
+	}
+	return glView;
+}
+
+} // END namespace
+
 
 
 // Делегат для кокоса
@@ -39,7 +59,9 @@ public:
 	}
 };
 
-RenderCocos2d::RenderCocos2d(PtrCocos2d<cocos2d::GLView>&& glView, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
+RenderCocos2d::RenderCocos2d(PtrCocos2d<cocos2d::GLView>&& glView
+                             , const IFactoryScene& factoryScene
+                             , const IManagerDescriptionScene& managerDescriptionScene)
     : ClassBase(factoryScene, managerDescriptionScene)
     , m_appDelegateCocos2d(new AppDelegateCocos2d())
     , m_glView(std::move(glView))
@@ -63,6 +85,19 @@ RenderCocos2d::RenderCocos2d(PtrCocos2d<cocos2d::GLView>&& glView, const IFactor
 	director->setAnimationInterval(1.0f / static_cast<float>(fps));
 	director->resume();
 	director->runWithScene(cocos2d::Scene::create());
+}
+
+RenderCocos2d::RenderCocos2d(const std::string& name,
+                             const std::pair<size_t, size_t>& sizeView
+                             , const std::pair<size_t, size_t>& sizeDesignResolution
+                             , const bool isResizable
+                             , const IFactoryScene& factoryScene
+                             , const IManagerDescriptionScene& managerDescriptionScene)
+    : RenderCocos2d(createGlView(name, sizeView, sizeDesignResolution, isResizable)
+                    , factoryScene
+                    , managerDescriptionScene)
+{
+
 }
 
 RenderCocos2d::~RenderCocos2d()

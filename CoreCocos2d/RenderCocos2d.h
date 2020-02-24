@@ -17,7 +17,15 @@ class RenderCocos2d : public Render
 	class AppDelegateCocos2d;
 	RenderCocos2d() = delete;
 public:
-	explicit RenderCocos2d(PtrCocos2d<cocos2d::GLView>&& glView, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene);
+	explicit RenderCocos2d(PtrCocos2d<cocos2d::GLView>&& glView
+	                       , const IFactoryScene& factoryScene
+	                       , const IManagerDescriptionScene& managerDescriptionScene);
+	explicit RenderCocos2d(const std::string& name
+	                       , const std::pair<size_t, size_t>& sizeView
+	                       , const std::pair<size_t, size_t>& sizeDesignResolution
+	                       , const bool isResizable
+	                       , const IFactoryScene& factoryScene
+	                       , const IManagerDescriptionScene& managerDescriptionScene);
 	virtual ~RenderCocos2d() override;
 
 	virtual int run(const std::function<void()>& preTick, const std::function<void()>& postTick) override;
