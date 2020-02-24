@@ -7,18 +7,8 @@
 #include <cocos/platform/desktop/CCGLViewImpl-desktop.h>
 // Core lib
 #include <Core/IScene.h>
-#include <Core/SessionApp.h>
 // CoreCocos2d
 #include "ISceneCocos2d.h"
-
-
-
-namespace
-{
-
-constexpr auto FRAME_ZOOM_FACTOR = 1.0f;
-
-} // END namespace
 
 
 
@@ -49,10 +39,10 @@ public:
 	}
 };
 
-RenderCocos2d::RenderCocos2d(const SessionApp& sessionApp, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
-    : ClassBase(sessionApp, factoryScene, managerDescriptionScene)
+RenderCocos2d::RenderCocos2d(PtrCocos2d<cocos2d::GLView>&& glView, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
+    : ClassBase(factoryScene, managerDescriptionScene)
     , m_appDelegateCocos2d(new AppDelegateCocos2d())
-    , m_glView(cocos2d::GLViewImpl::createWithRect(sessionApp.getName(), cocos2d::Rect(0, 0, sessionApp.getSize().first, sessionApp.getSize().second), FRAME_ZOOM_FACTOR, sessionApp.getResizable()))
+    , m_glView(std::move(glView))
     , m_eventPreTick(cocos2d::Director::getInstance()->getEventDispatcher()->addCustomEventListener(cocos2d::Director::EVENT_AFTER_DRAW, [this] (cocos2d::EventCustom* /*eventCustom*/)
     {
         this->handleAfterDraw();
@@ -65,7 +55,6 @@ RenderCocos2d::RenderCocos2d(const SessionApp& sessionApp, const IFactoryScene& 
 	auto director = cocos2d::Director::getInstance();
 	// Add GlView to Director
 	director->setOpenGLView(m_glView.get());
-	m_glView->setDesignResolutionSize(sessionApp.getSize().first, sessionApp.getSize().second, ResolutionPolicy::SHOW_ALL);
 	// Setting Director
 	director->setProjection(cocos2d::Director::Projection::_2D);
 	director->setContentScaleFactor(1.0f);
