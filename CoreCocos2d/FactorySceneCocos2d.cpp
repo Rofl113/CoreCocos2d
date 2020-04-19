@@ -3,7 +3,9 @@
 // Cocos lib
 #include <cocos/2d/CCScene.h>
 #include <cocos/base/CCDirector.h>
+#ifdef BUILD_EDITOR_COCOSBUILDER
 #include <cocosbuilder/CCNodeLoaderLibrary.h>
+#endif // END BUILD_EDITOR_COCOSBUILDER
 // Core lib
 #include <Core/IDescriptionScene.h>
 // CoreCocos2d
@@ -30,6 +32,7 @@ std::shared_ptr<IScene> FactorySceneCocos2d::createScene(const std::shared_ptr<I
 					const auto& ccbName = dataCocos2d->getCcbName();
 					if (ccbName.empty() == false)
 					{
+#ifdef BUILD_EDITOR_COCOSBUILDER
 						auto nodeLoaderLibrary = cocosbuilder::NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 
 	//					sceneCocos->registerLoaders(nodeLoaderLibrary);
@@ -38,6 +41,7 @@ std::shared_ptr<IScene> FactorySceneCocos2d::createScene(const std::shared_ptr<I
 						// cocosbuilder::CCBReader ccbReader(nodeLoaderLibrary, nullptr, scene->m_resolver.get(), nullptr);
 						auto root = ccbReader.readNodeGraphFromFile(ccbName.c_str(), sceneCocos.get());
 						sceneCocos->addChild(root);
+#endif // END BUILD_EDITOR_COCOSBUILDER
 					}
 				}
 				// Create Scene
