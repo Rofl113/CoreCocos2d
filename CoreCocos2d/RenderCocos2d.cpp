@@ -116,6 +116,12 @@ int RenderCocos2d::run(const std::function<void ()>& preTick, const std::functio
 	return cocos2d::Application::getInstance()->run();
 }
 
+void RenderCocos2d::close()
+{
+	// Close the cocos2d-x game scene and quit the application
+	return cocos2d::Director::getInstance()->end();
+}
+
 void RenderCocos2d::handleLoadScene(const std::shared_ptr<IScene>& /*scene*/) const
 {
 }
