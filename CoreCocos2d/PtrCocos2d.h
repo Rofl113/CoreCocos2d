@@ -27,6 +27,22 @@ public:
 		// no retain()!
 	}
 
+	template<typename ... Args>
+	static PtrCocos2d<T> createDefault(Args&& ... args)
+	{
+		auto ret = new (std::nothrow) T(std::forward<Args>(args)...);
+		if (ret && ret->init())
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			delete ret;
+			ret = nullptr;
+		}
+		return ret;
+	}
+
 	PtrCocos2d(T* p) noexcept: px( p )
 	{
 		if (px) px->retain();
