@@ -15,7 +15,7 @@ std::unique_ptr<IFactoryScene> CoreAppDelegateCocos2d::createFactoryScene(const 
 
 std::unique_ptr<IRender> CoreAppDelegateCocos2d::createRender(const SessionApp& sessionApp, const IFactoryScene& factoryScene, const IManagerDescriptionScene& managerDescriptionScene)
 {
-	return std::unique_ptr<IRender>(new RenderCocos2d(sessionApp.getName(), sessionApp.getSize(), sessionApp.getSize(), sessionApp.getResizable(), factoryScene, managerDescriptionScene));
+	return std::unique_ptr<IRender>(new RenderCocos2d(sessionApp.getName(), sessionApp.getSize(), sessionApp.getSizeDesign(), sessionApp.getResizable(), factoryScene, managerDescriptionScene));
 }
 
 std::unique_ptr<IManagerScene> CoreAppDelegateCocos2d::createManagerScene(const SessionApp& /*sessionApp*/, const IRender& render)
