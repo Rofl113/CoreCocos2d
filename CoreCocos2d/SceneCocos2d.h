@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 // Core lib
 #include <Core/IScene.h>
 #include "PtrCocos2d.h"
@@ -29,6 +30,7 @@ public: /// ISceneCocos2d
 
 protected:
 	std::string fullPathForFilename(const std::string& name) const;
+	std::vector<std::string> fullFilePathsForDir(const std::string& dirPath) const;
 
 private:
 	const PtrCocos2d<cocos2d::Scene> m_scene;

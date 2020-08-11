@@ -31,6 +31,28 @@ std::string SceneCocos2d::fullPathForFilename(const std::string& name) const
 	return {};
 }
 
+std::vector<std::string> SceneCocos2d::fullFilePathsForDir(const std::string& dirPath) const
+{
+	if (const auto descriptionCocos2d = dynamic_cast<const DescriptionSceneCocos2d*>(m_description.get()))
+	{
+		const HolderPathsCocos2d pathsHolder (descriptionCocos2d->getPaths());
+		auto fu = cocos2d::FileUtils::getInstance();
+		const auto items = fu->listFiles(dirPath);
+		std::vector<std::string> files;
+		for (const auto& item : items)
+		{
+			if (not fu->isDirectoryExist(item))
+			{
+				files.push_back(item);
+			}
+		}
+		return files;
+	}
+	assert(false);
+	return {};
+}
+
+
 void SceneCocos2d::onLoad()
 {
 
